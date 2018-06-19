@@ -31,6 +31,11 @@ defineSupportCode(function ({ Given, When, Then })  {
         await $("input[name='cpfbox']").sendKeys(<string> cpf);
         await element(by.buttonText('Adicionar')).click();
     });
+	
+	When(/^ eu peço o relatorio de turmas anteriores$/, aysnc () => {
+		
+		
+	});
 
     Then(/^I can see "([^\"]*)" with CPF "(\d*)" in the students list$/, async (name, cpf) => {
         var allalunos : ElementArrayFinder = element.all(by.name('alunolist'));
