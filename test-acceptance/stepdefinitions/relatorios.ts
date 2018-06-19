@@ -5,8 +5,10 @@ let expect = chai.expect;
 
 let sleep = (ms => new Promise(resolve => setTimeout(resolve, ms)));
 
-let sameCPF = ((elem, cpf) => elem.element(by.name('cpflist')).getText().then(text => text === cpf));
 let sameName = ((elem, name) => elem.element(by.name('nomelist')).getText().then(text => text === name));
+let sameMedia = ((elem, media) => elem.element(by.name('nomelist')).getText().then(text => text === media));
+let sameStatus = ((elem, stts) => elem.element(by.name('nomelist')).getText().then(text => text === stts));
+let samePresença = ((elem, presença) => elem.element(by.name('nomelist')).getText().then(text => text === presença));
 
 let pAND = ((p,q) => p.then(a => q.then(b => a && b)))
 
@@ -23,21 +25,22 @@ defineSupportCode(function ({ Given, When, Then }) {
 		var aluno: new Aluno(nome);
 		aluno.atribuiNotas(lst1,lst2,lst3,lst4,av1,av2);
 		aluno.presença(66);
-		alunos.newAluno(aluno);
+		turma.newAluno(aluno);
+		alunos.
 	});
 	
 	When(/^eu peço o relatorio de turmas anteriores$/, async () => {
-		
+		await element(by.buttonText("Relatório de Turmas Antigas")).click();
 	});
 	
-	When(/^eu peço os relatorios individuais de alunos$/, async () => {
-		
+	When(/^eu peço os relatorios da turma atual $/, async () => {
+		await element(by.buttonText("Relatório de Turmas Atual")).click();
 	});
-	
 	
 	Then(/^aparece o aluno "([^\"]*)", media "(\d*)", presença "(\d*)" e status "([^\"]*)"$/, async (nome,media,pres,stt) => {
-		var allalunos: ElementArrayFinder = element.all(by.name('alunolist'));
-		allalunos.filter(elem => pAND(sameCPF(elem,cpf),sameName(elem,name), sameMedia(elem,media))).then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(1));
+		var alunos : ElementArrayFinder = element.all(by.name('relatorioturma'));
+		alunos.filter(elem => pAND(sameName(elem,name))).then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(1));
+	
 	});
 
 })

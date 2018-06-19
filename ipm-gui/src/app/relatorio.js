@@ -1,6 +1,10 @@
+import Aluno from './Aluno'
+
 export class Relatorio{
 	nomeTurma: string;
 	var alunos : [];
+	
+	
 	
 	gerarRelatorio(alunosRecieve: AlunoService): Relatorio {
 		for (let key in alunos){
@@ -9,5 +13,4 @@ export class Relatorio{
 			
 		}		
 	}
-	
 }
