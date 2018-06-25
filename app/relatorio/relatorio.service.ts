@@ -9,12 +9,12 @@ let create = () => {
 
 @Injectable()
 export class RelatorioService {
-	alunos: AlunoRelatorio[]=[];
+	turmasAnteriores: TurmaRelatorio[]=[];
 	
-  constructor() {this.alunos = create; }  
+  constructor() {this.turmasAnteriores = create; }  
   
-  getRelatoriosTurmasAnteriores(): AlunoRelatorio[]{
-	  return this.alunos;
+  getRelatoriosTurmasAnteriores(): RelatorioTurma[]{
+	  return this.turmasAnteriores;
   }
   
   

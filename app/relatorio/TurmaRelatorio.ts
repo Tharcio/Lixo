@@ -8,7 +8,7 @@ export class RelatorioTurma{
 	alunos: AlunoRelatorio[] =[];
 	
 	constructor(nomeT: string){
-		this.nomeTurma = nomeT
+		this.nomeTurma = nomeT;
 	}
 	
 	gerarRelatorioAlunoUm(from: Aluno): void {
