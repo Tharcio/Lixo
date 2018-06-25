@@ -10,35 +10,43 @@ let sameName = ((elem, name) => elem.element(by.name('nomelist')).getText().then
 
 let pAND = ((p,q) => p.then(a => q.then(b => a && b)))
 
+let alocarMonitor = ((monitor,aluno) => {
+	    await $("input[name='monitorbox']").sendKeys(<string> monitor);
+        await $("input[name='alunobox']").sendKeys(<string> aluno);
+        await element(by.buttonText('Alocar')).click();
+});
+
+let valorMaximo = ((num) => await $("input[name='maximobox']").sendKeys(<string> num);
+
 defineSupportCode(function ({ Given, When, Then })  {
-    Given(/^I am at the students page$/, async () => {
+	
+	Given (/^eu vejo uma lista de monitores com o monitor "([^\"]*)" com "([^\"]*)","([^\"]*)", "([^\"]*)", "([^\"]*)", "([^\"]*)",	"([^\"]*)" alocados e o monitor "([^\"]*)" com "([^\"]*)" alocados$/,
+	async (monitor1,aluno1,aluno2,aluno3,aluno4,aluno5,aluno6,monitor2,alunoM2) => {
+		alocarMonitor(monitor1,aluno1);
+		alocarMonitor(monitor1,aluno2);
+		alocarMonitor(monitor1,aluno3);
+		alocarMonitor(monitor1,aluno4);
+		alocarMonitor(monitor1,aluno5);
+		alocarMonitor(monitor1,aluno6);
+	});
+	Given (/^uma mensagem indicando o máximo de "(\d*)" alunos por monitor$/,
+	async (numMaximo) => {
+		await $("input[name='maximobox']").sendKeys(<int> numMaximo);
+	});
+	
+    Given(/^Estou na pagina de alocação de monitores$/, async () => {
         await browser.get("http://localhost:4200/");
-        await expect(browser.getTitle()).to.eventually.equal('TaGui');
-        await $("a[name='alunos']").click();
+        await expect(browser.getTitle()).to.eventually.equal('IpManager');
+        await $("a[name='monitores']").click();
     })
 
-    Given(/^I cannot see a student with CPF "(\d*)" in the students list$/, async (cpf) => {
-        var allcpfs : ElementArrayFinder = element.all(by.name('cpflist'));
-        await allcpfs;
-        var samecpfs = allcpfs.filter(elem =>
-                                      elem.getText().then(text => text === cpf));
-        await samecpfs;
-        await samecpfs.then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(0));
-    });
-
-    When(/^I try to register the student "([^\"]*)" with CPF "(\d*)"$/, async (name, cpf) => {
-        await $("input[name='namebox']").sendKeys(<string> name);
-        await $("input[name='cpfbox']").sendKeys(<string> cpf);
-        await element(by.buttonText('Adicionar')).click();
+    When(/^Eu tento alocar o aluno "([^\"]*)" ao monitor "([^\"]*)"$/, async (aluno, monitor) => {
+        alocarMonitor(aluno,monitor);
     });
 	
-	When(/^ eu peço o relatorio de turmas anteriores$/, aysnc () => {
-		
-		
-	});
-
-    Then(/^I can see "([^\"]*)" with CPF "(\d*)" in the students list$/, async (name, cpf) => {
-        var allalunos : ElementArrayFinder = element.all(by.name('alunolist'));
-        allalunos.filter(elem => pAND(sameCPF(elem,cpf),sameName(elem,name))).then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(1));
+    Then(/^And eu vejo uma lista de monitores com o monitor "([^\"]*)" com "([^\"]*)","([^\"]*)", "([^\"]*)", "([^\"]*)", "([^\"]*)",	"([^\"]*)" alocados e o monitor "([^\"]*)" com "([^\"]*)" alocados$/,
+	async (monitor1,aluno1,aluno2,aluno3,aluno4,aluno5,aluno6,monitor2,alunoM2) => {
+        var allmonitores : ElementArrayFinder = element.all(by.name('monitorslist'));
+        allmonitores.filter(elem => sameName(elem,monitor)).filter(elem => );
     });
 })

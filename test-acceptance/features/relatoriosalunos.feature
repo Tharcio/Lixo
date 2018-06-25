@@ -16,5 +16,3 @@ And tenho as notas "7", "7", "8", "8" nas lista e "8", "7" nas provas, e "80%" d
 When eu entro na pagina do perfil
 Then eu vejo o relatorio com as notas "7", "7", "8", "8" nas lista e "8", "7" nas provas, e "80%" de presença
 media "7.5", e status "aprovado"
-
-

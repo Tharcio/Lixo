@@ -1,0 +1,23 @@
+<html (mousemove)="onMove()">
+
+<ul>
+<li *ngFor= "let a of relatTurma" name="turmaslist">
+<table>
+<thead>
+    <tr><td>{{a.nomeTurma}}</td></tr>
+</thead>
+<tr *ngIf="getNumAlunos(a) > 0">
+   <th>Nome</th>
+   <th>Media</th>
+   <th>Presença</th>
+   <th>status</th>
+</tr>
+<tr *ngFor="let b of getAlunosFromRelatorio(a)" name="alunolist">
+   <td name="nomealuno">{{b.nome}}</td>
+   <td name="mediaaluno">{{b.media}}</td>
+   <td name="presaluno">{{b.presença}}</td>
+   <td name="statusaluno">{{b.stts}}</td>
+</tr>
+</table>
+</li>
+</ul>
